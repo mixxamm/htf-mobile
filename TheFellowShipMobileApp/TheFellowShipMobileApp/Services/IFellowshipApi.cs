@@ -10,5 +10,12 @@ namespace TheFellowShipMobileApp.Services
 
         [Post("/start/{difficulty}")]
         Task<string> GetDifficulty(int difficulty);
+
+        [Put("/{gameId}/move/{direction}")]
+        Task<string> MovePlayer(string gameid, int direction);
+
+
+        [Get("/{gameId}/state")]
+        Task<string> GetGameState(string gameId);
     }
 }
