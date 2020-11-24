@@ -17,6 +17,6 @@ namespace TheFellowShipMobileApp.Models
         public int x { get; set; }
         public int y { get; set; }
 
-        public Types types { get; set; }
+        public Types Type { get; set; }
     }
 }
