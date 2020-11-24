@@ -111,9 +111,19 @@ namespace TheFellowShipMobileApp
                 if (game.GameState == GameStates.InProgress)
                     CreateGameGrid(game);
                 else if (game.GameState == GameStates.Won)
-                    IdLabel.Text = "You won!";
+                {
+                    GameLayout.IsVisible = false;
+                    EndLayout.IsVisible = true;
+                    ResultLabel.Text = "You win!";
+                    ResultLabel.TextColor = Color.Green;
+                }
                 else
-                    IdLabel.Text = "You lose!";
+                {
+                    GameLayout.IsVisible = false;
+                    EndLayout.IsVisible = true;
+                    ResultLabel.Text = "You loose ☹!";
+                    ResultLabel.TextColor = Color.Red;
+                }
             }
             
         }
