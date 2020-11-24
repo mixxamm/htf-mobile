@@ -107,8 +107,18 @@ namespace TheFellowShipMobileApp
             }
             
             
-            App.Container.Resolve<IGameService>().MovePlayer(GameId, id);
-            CreateGameGrid();
+            string result = App.Container.Resolve<IGameService>().MovePlayer(GameId, id);
+            if(result != null)
+            {
+                dynamic game = JsonConvert.DeserializeObject(result);
+                if (game.gameState == 0)
+                    CreateGameGrid();
+                else if (game.gameState == 1)
+                    IdLabel.Text = "You won!";
+                else
+                    IdLabel.Text = "You lose!";
+            }
+            
         }
     }
 }
