@@ -24,7 +24,8 @@ namespace TheFellowShipMobileApp
             StartLayout.IsVisible = false;
             GameLayout.IsVisible = true;
             IdLabel.Text = version;
-            CreateGameGrid();
+            Game game = JsonConvert.DeserializeObject<Game>(App.Container.Resolve<IGameService>().GetGameState(GameId));
+            CreateGameGrid(game);
         }
 
         protected override bool OnBackButtonPressed()
@@ -32,39 +33,49 @@ namespace TheFellowShipMobileApp
             return true;
         }
 
-        public void CreateGameGrid()
+        public void CreateGameGrid(Game game)
         {
-            string surroundingsString = App.Container.Resolve<IGameService>().GetSurroundings(GameId);
+            /*string surroundingsString = App.Container.Resolve<IGameService>().GetSurroundings(GameId);
             JArray surroundings = JArray.Parse(surroundingsString);
             Console.WriteLine(surroundings.Count);
-            Console.WriteLine(surroundings[0]);
+            Console.WriteLine(surroundings[0]);*/
 
             gameTiles.Children.Clear();
             gameTiles.ColumnDefinitions.Clear();
             gameTiles.RowDefinitions.Clear();
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < game.BoardHeight; i++)
             {
                 gameTiles.RowDefinitions.Add(new RowDefinition());
                 gameTiles.ColumnDefinitions.Add(new ColumnDefinition());
             }
-            int counter = 0;
-            Console.WriteLine(surroundingsString);
-            foreach (dynamic surrounding in surroundings)
+            foreach (Location location in game.FirewallLocations)
             {
-                Location location = JsonConvert.DeserializeObject<Location>(Convert.ToString(surrounding));
-                Console.WriteLine(location.Type);
-                var label = new Image
+                AddLocation(location);
+            }
+
+            foreach(Location location in game.NetgullLocations)
+            {
+                AddLocation(location);
+            }
+
+            AddLocation(game.PlayerLocation);
+            AddLocation(game.McafeeLocation);
+
+            void AddLocation(Location location)
+            {
+                if(location != null)
                 {
-                    Source = $"{location.Type.ToString().Substring(0, 1).ToLower()}.png",
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Center
-                };
-                gameTiles.Children.Add(label, counter / 7, counter % 7);
-                Console.WriteLine(counter % 7);
-                Console.WriteLine(counter / 7);
-                Console.WriteLine(counter);
-                counter++;
+                    var label = new Image
+                    {
+                        Source = $"{location.Type.ToString().Substring(0, 1).ToLower()}.png",
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Center
+                    };
+                    Console.WriteLine($"x: {location.x}, y: {location.y}");
+                    if (location != null)
+                        gameTiles.Children.Add(label, location.x, location.y);
+                }                
             }
             
 
@@ -90,10 +101,10 @@ namespace TheFellowShipMobileApp
             switch ((sender as Button).Text)
             {
                 case "Up":
-                    id = 1;
+                    id = 3;
                     break;
                 case "Down":
-                    id = 3;
+                    id = 1;
                     break;
                 case "Left":
                     id = 4;
@@ -110,10 +121,10 @@ namespace TheFellowShipMobileApp
             string result = App.Container.Resolve<IGameService>().MovePlayer(GameId, id);
             if(result != null)
             {
-                dynamic game = JsonConvert.DeserializeObject(result);
-                if (game.gameState == 0)
-                    CreateGameGrid();
-                else if (game.gameState == 1)
+                Game game = JsonConvert.DeserializeObject<Game>(result);
+                if (game.GameState == GameStates.InProgress)
+                    CreateGameGrid(game);
+                else if (game.GameState == GameStates.Won)
                     IdLabel.Text = "You won!";
                 else
                     IdLabel.Text = "You lose!";

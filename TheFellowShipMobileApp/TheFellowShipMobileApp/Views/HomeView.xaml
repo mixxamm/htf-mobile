@@ -13,6 +13,10 @@
         </StackLayout>
 
         <StackLayout x:Name="GameLayout" IsVisible="false" VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
+            
+            <Label x:Name="IdLabel" Text="No id"></Label>
+            
+            <Grid x:Name="gameTiles" />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50" />
@@ -28,9 +32,6 @@
                 <Button Grid.Row="1" Grid.Column="1" Text="Down" Clicked="MoveButton_Clicked" />
                 <Button Grid.Row="1" Grid.Column="2" Text="Right" Clicked="MoveButton_Clicked" />
             </Grid>
-            <Label x:Name="IdLabel" Text="No id"></Label>
-            
-            <Grid x:Name="gameTiles" />
         </StackLayout>
     </Grid>
 

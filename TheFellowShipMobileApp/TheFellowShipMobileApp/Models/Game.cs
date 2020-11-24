@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace TheFellowShipMobileApp.Models
 {
@@ -14,13 +16,13 @@ namespace TheFellowShipMobileApp.Models
     }
     public class Game
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int BoardWidth { get; set; }
         public int BoardHeight { get; set; }
-        public List<Location> NetgullLocations { get; set; }
-        public List<Location> FirewallLocations { get; set; }
-        public List<Location> PlayerLocation { get; set; }
-        public List<Location> McafeeLocation { get; set; }
+        public IEnumerable<Location> NetgullLocations { get; set; }
+        public IEnumerable<Location> FirewallLocations { get; set; }
+        public Location PlayerLocation { get; set; }
+        public Location McafeeLocation { get; set; }
 
         public GameStates GameState { get; set; }
         public Difficulties Difficulty { get; set; }
