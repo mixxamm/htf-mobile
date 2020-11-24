@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using TheFellowShipMobileApp.Models;
 using TheFellowShipMobileApp.Services;
 using Xamarin.Forms;
 
@@ -37,21 +38,28 @@ namespace TheFellowShipMobileApp
             JArray surroundings = JArray.Parse(surroundingsString);
             Console.WriteLine(surroundings.Count);
             Console.WriteLine(surroundings[0]);
-            foreach(dynamic surrounding in surroundings)
+
+            for(int i = 0; i < 6; i++)
             {
-                // dynamic surrounding = JsonConvert.DeserializeObject(surroundingString);
-                Console.WriteLine(surrounding.x);
-                Console.WriteLine(surrounding.y);
+                gameTiles.RowDefinitions.Add(new RowDefinition());
+                gameTiles.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            int counter = 0;
+            foreach (dynamic surrounding in surroundings)
+            {
+                Location location = JsonConvert.DeserializeObject<Location>(Convert.ToString(surrounding));
+                Console.WriteLine(location.Type);
+                var label = new Label
+                {
+                    Text = location.Type.ToString(),
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center
+                };
+                gameTiles.Children.Add(label, counter++ % 6, counter / 6);
             }
             
 
-            gameTiles.RowDefinitions.Add(new RowDefinition());
-            gameTiles.RowDefinitions.Add(new RowDefinition());
-            gameTiles.RowDefinitions.Add(new RowDefinition());
-            gameTiles.ColumnDefinitions.Add(new ColumnDefinition());
-            gameTiles.ColumnDefinitions.Add(new ColumnDefinition());
-
-            for (int rowIndex = 0; rowIndex < 3; rowIndex++)
+            /*for (int rowIndex = 0; rowIndex < 3; rowIndex++)
             {
                 for (int columnIndex = 0; columnIndex < 2; columnIndex++)
                 {
@@ -64,7 +72,7 @@ namespace TheFellowShipMobileApp
                     };
                     gameTiles.Children.Add(label, columnIndex, rowIndex);
                 }
-            }
+            }*/
         }
     }
 }
