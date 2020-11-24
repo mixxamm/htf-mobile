@@ -14,7 +14,8 @@ namespace TheFellowShipMobileApp
 
         void GetVersion(object sender, EventArgs args)
         {
-            var version = App.Container.Resolve<IGameService>().GetVersion().Result;
+            var version = App.Container.Resolve<IGameService>().GetDifficulty(2);
+            Console.WriteLine(version);
         }
 
         protected override bool OnBackButtonPressed()
