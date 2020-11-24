@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using TheFellowShipMobileApp.Services;
 using Xamarin.Forms;
@@ -31,6 +33,18 @@ namespace TheFellowShipMobileApp
 
         public void CreateGameGrid()
         {
+            string surroundingsString = App.Container.Resolve<IGameService>().GetSurroundings(GameId);
+            JArray surroundings = JArray.Parse(surroundingsString);
+            Console.WriteLine(surroundings.Count);
+            Console.WriteLine(surroundings[0]);
+            foreach(dynamic surrounding in surroundings)
+            {
+                // dynamic surrounding = JsonConvert.DeserializeObject(surroundingString);
+                Console.WriteLine(surrounding.x);
+                Console.WriteLine(surrounding.y);
+            }
+            
+
             gameTiles.RowDefinitions.Add(new RowDefinition());
             gameTiles.RowDefinitions.Add(new RowDefinition());
             gameTiles.RowDefinitions.Add(new RowDefinition());
@@ -44,7 +58,7 @@ namespace TheFellowShipMobileApp
 
                     var label = new Label
                     {
-                        Text = $"${columnIndex} - {rowIndex}",
+                        Text = $"{columnIndex} - {rowIndex}",
                         VerticalOptions = LayoutOptions.Center,
                         HorizontalOptions = LayoutOptions.Center
                     };

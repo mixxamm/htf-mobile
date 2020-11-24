@@ -8,6 +8,7 @@ namespace TheFellowShipMobileApp.Services
     {
         Task<string> GetVersion();
         string GetDifficulty(int difficulty);
+        string GetSurroundings(string gameid);
     }
 
     public class GameService : IGameService
@@ -35,6 +36,18 @@ namespace TheFellowShipMobileApp.Services
             try
             {
                 return App.Container.Resolve<IFellowshipApiService>().GetDifficulty(difficulty);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public string GetSurroundings(string gameid)
+        {
+            try
+            {
+                return App.Container.Resolve<IFellowshipApiService>().GetSurroundings(gameid);
             }
             catch (Exception ex)
             {
