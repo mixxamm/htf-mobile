@@ -9,6 +9,8 @@ namespace TheFellowShipMobileApp.Services
         string GetDifficulty(int difficulty);
         string MovePlayer(string gameid, int direction);
         string GetGameState(string gameid);
+        string GetSurroundings(string gameid);
+
     }
     public class FellowShipApiService : IFellowshipApiService
     {
@@ -38,6 +40,19 @@ namespace TheFellowShipMobileApp.Services
             try
             {
                 var result = _fellowshipApi.GetDifficulty(difficulty).Result;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public string GetSurroundings(string gameid)
+        {
+            try
+            {
+                var result = _fellowshipApi.GetSurroundings(gameid).Result;
 
                 return result;
             }

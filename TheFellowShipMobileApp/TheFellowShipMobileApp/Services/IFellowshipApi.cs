@@ -8,6 +8,9 @@ namespace TheFellowShipMobileApp.Services
         [Get("/version")]
         Task<string> GetVersion();
 
+        [Get("/{gameId}/code")]
+        Task<string> GetSurroundings(string gameid);
+
         [Post("/start/{difficulty}")]
         Task<string> GetDifficulty(int difficulty);
 
