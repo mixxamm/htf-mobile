@@ -19,7 +19,6 @@ namespace TheFellowShipMobileApp
         void GetVersion(object sender, EventArgs args)
         {            
             var version = App.Container.Resolve<IGameService>().GetDifficulty(Difficulty.SelectedIndex);
-            Console.WriteLine(version);
             GameId = version;
             StartLayout.IsVisible = false;
             GameLayout.IsVisible = true;
@@ -35,11 +34,6 @@ namespace TheFellowShipMobileApp
 
         public void CreateGameGrid(Game game)
         {
-            /*string surroundingsString = App.Container.Resolve<IGameService>().GetSurroundings(GameId);
-            JArray surroundings = JArray.Parse(surroundingsString);
-            Console.WriteLine(surroundings.Count);
-            Console.WriteLine(surroundings[0]);*/
-
             gameTiles.Children.Clear();
             gameTiles.ColumnDefinitions.Clear();
             gameTiles.RowDefinitions.Clear();
@@ -138,7 +132,6 @@ namespace TheFellowShipMobileApp
                     VerticalOptions = LayoutOptions.Center,
                     HorizontalOptions = LayoutOptions.Center
                 };
-                Console.WriteLine($"x: {location.x}, y: {location.y}");
                 if (location != null)
                     gameTiles.Children.Add(label, location.x, location.y);
             }
@@ -147,6 +140,7 @@ namespace TheFellowShipMobileApp
         private void RestartButton_Clicked(object sender, EventArgs e)
         {
             GameLayout.IsVisible = false;
+            EndLayout.IsVisible = false;
             StartLayout.IsVisible = true;
         }
 
