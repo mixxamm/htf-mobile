@@ -14,5 +14,8 @@ namespace TheFellowShipMobileApp.Services
         [Put("/{gameId}/move/{direction}")]
         Task<string> MovePlayer(string gameid, int direction);
 
+
+        [Get("/{gameId}/state")]
+        Task<string> GetGameState(string gameId);
     }
 }
