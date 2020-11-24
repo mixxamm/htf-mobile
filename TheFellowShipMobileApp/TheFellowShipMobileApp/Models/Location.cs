@@ -9,7 +9,7 @@ namespace TheFellowShipMobileApp.Models
         public int x { get; set; }
         public int y { get; set; }
 
-        enum type
+        public enum type
         {
             Empty,
             Firewall,
