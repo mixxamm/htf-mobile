@@ -17,8 +17,8 @@ namespace TheFellowShipMobileApp
         }
 
         void GetVersion(object sender, EventArgs args)
-        {
-            var version = App.Container.Resolve<IGameService>().GetDifficulty(2);
+        {            
+            var version = App.Container.Resolve<IGameService>().GetDifficulty(Difficulty.SelectedIndex);
             Console.WriteLine(version);
             GameId = version;
             StartLayout.IsVisible = false;
@@ -62,21 +62,7 @@ namespace TheFellowShipMobileApp
             AddLocation(game.PlayerLocation);
             AddLocation(game.McafeeLocation);
 
-            void AddLocation(Location location)
-            {
-                if(location != null)
-                {
-                    var label = new Image
-                    {
-                        Source = $"{location.Type.ToString().Substring(0, 1).ToLower()}.png",
-                        VerticalOptions = LayoutOptions.Center,
-                        HorizontalOptions = LayoutOptions.Center
-                    };
-                    Console.WriteLine($"x: {location.x}, y: {location.y}");
-                    if (location != null)
-                        gameTiles.Children.Add(label, location.x, location.y);
-                }                
-            }
+           
             
 
             /*for (int rowIndex = 0; rowIndex < 3; rowIndex++)
@@ -130,6 +116,39 @@ namespace TheFellowShipMobileApp
                     IdLabel.Text = "You lose!";
             }
             
+        }
+
+        private void AddLocation(Location location)
+        {
+            if (location != null)
+            {
+                var label = new Image
+                {
+                    Source = $"{location.Type.ToString().Substring(0, 1).ToLower()}.png",
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center
+                };
+                Console.WriteLine($"x: {location.x}, y: {location.y}");
+                if (location != null)
+                    gameTiles.Children.Add(label, location.x, location.y);
+            }
+        }
+
+        private void RestartButton_Clicked(object sender, EventArgs e)
+        {
+            GameLayout.IsVisible = false;
+            StartLayout.IsVisible = true;
+        }
+
+        private void PowerUpButton_Clicked(object sender, EventArgs e)
+        {
+            string surroundingsString = App.Container.Resolve<IGameService>().GetSurroundings(GameId);
+            JArray surroundings = JArray.Parse(surroundingsString);
+            foreach(dynamic surroundingString in surroundings)
+            {
+                Location location = JsonConvert.DeserializeObject<Location>(Convert.ToString(surroundingString));
+                AddLocation(location);
+            }
         }
     }
 }

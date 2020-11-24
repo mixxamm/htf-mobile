@@ -10,6 +10,14 @@
         <StackLayout x:Name="StartLayout" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" IsVisible="true">
             <Label Text="Bring the code back to Mount McAfee!" />
             <Button Text="Start" Clicked="GetVersion"></Button>
+            <Picker x:Name="Difficulty" HorizontalOptions="FillAndExpand">
+                <Picker.Items>
+                    <x:String>Easy</x:String>
+                    <x:String>Normal</x:String>
+                    <x:String>Hard</x:String>
+                </Picker.Items>
+                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+            </Picker>
         </StackLayout>
 
         <StackLayout x:Name="GameLayout" IsVisible="false" VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
@@ -27,7 +35,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" Grid.Column="0" Text="Restart" x:Name="RestartButton" Clicked="RestartButton_Clicked"/>
                 <Button Grid.Row="0" Grid.Column="1" Text="Up" Clicked="MoveButton_Clicked" />
+                <Button Grid.Row="0" Grid.Column="2" Text="PowerUp" x:Name="PowerUpButton" Clicked="PowerUpButton_Clicked" />
                 <Button Grid.Row="1" Grid.Column="0" Text="Left" Clicked="MoveButton_Clicked" />
                 <Button Grid.Row="1" Grid.Column="1" Text="Down" Clicked="MoveButton_Clicked" />
                 <Button Grid.Row="1" Grid.Column="2" Text="Right" Clicked="MoveButton_Clicked" />
