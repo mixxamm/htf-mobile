@@ -7,5 +7,8 @@ namespace TheFellowShipMobileApp.Services
     {
         [Get("/version")]
         Task<string> GetVersion();
+
+        [Get("/start/{difficulty}")]
+        Task<string> GetDifficulty();
     }
 }
