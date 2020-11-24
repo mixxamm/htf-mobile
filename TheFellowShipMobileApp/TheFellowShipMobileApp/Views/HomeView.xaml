@@ -6,9 +6,15 @@
              mc:Ignorable="d"
              x:Class="TheFellowShipMobileApp.MainPage">
 
-    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
-        <Label Text="Bring the code back to Mount McAfee!" />
-        <Button Text="GetVersion" Clicked="GetVersion"></Button>
-    </StackLayout>
+    <Grid>
+        <StackLayout x:Name="StartLayout" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" IsVisible="true">
+            <Label Text="Bring the code back to Mount McAfee!" />
+            <Button Text="Start" Clicked="GetVersion"></Button>
+        </StackLayout>
+
+        <StackLayout x:Name="GameLayout" IsVisible="false" VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
+            <Label x:Name="IdLabel" Text="No id"></Label>
+        </StackLayout>
+    </Grid>
 
 </ContentPage>

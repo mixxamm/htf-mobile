@@ -7,6 +7,7 @@ namespace TheFellowShipMobileApp
 {
     public partial class MainPage : ContentPage
     {
+        public string GameId { get; set; }
         public MainPage()
         {
             InitializeComponent();
@@ -16,6 +17,10 @@ namespace TheFellowShipMobileApp
         {
             var version = App.Container.Resolve<IGameService>().GetDifficulty(2);
             Console.WriteLine(version);
+            GameId = version;
+            StartLayout.IsVisible = false;
+            GameLayout.IsVisible = true;
+            IdLabel.Text = version;
         }
 
         protected override bool OnBackButtonPressed()
