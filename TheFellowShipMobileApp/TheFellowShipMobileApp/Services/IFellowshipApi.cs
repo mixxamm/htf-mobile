@@ -10,5 +10,8 @@ namespace TheFellowShipMobileApp.Services
 
         [Get("/start/{difficulty}")]
         Task<string> GetDifficulty();
+        
+        [Get("/{gameId}/code")]
+        Task<dynamic> GetTiles();
     }
 }
